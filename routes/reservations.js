@@ -1,13 +1,17 @@
 const express = require('express');
-const {getReservations, getReservation, addReservation, updateReservation, deleteReservation} = require('../controllers/reservations');
+const {getReservations, getReservation, addReservation, updateReservation, deleteReservation, getCalendars} = require('../controllers/reservations');
 
 const router = express.Router({mergeParams:true});
 
 const {protect,authorize} = require('../middleware/user');
 
+router.route('/calendars')
+    .get(protect,  getCalendars);
+
 router.route('/')
     .get(protect, getReservations)
     .post(protect, authorize('admin','user'), addReservation);
+
 router.route('/:id')
     .get(protect, getReservation)
     .put(protect, authorize('admin','user'), updateReservation)
