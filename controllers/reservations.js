@@ -180,7 +180,7 @@ exports.updateReservation = async (req,res,next) => {
         }
 
          // Check if trying to update apptDate to a date when campground is fully booked
-         if (req.body.apptDate && req.body.apptDate !== reservation.apptDate.toISOString().split('T')[0]) {
+        if (req.body.apptDate && req.body.apptDate !== reservation.apptDate.toISOString().split('T')[0]) {
             const existingReservations = await Reservation.find({
                 campground: reservation.campground,
                 apptDate: req.body.apptDate,

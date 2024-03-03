@@ -1,0 +1,23 @@
+@startuml
+left to right direction
+actor "User" as user
+rectangle "Campground" as CampgroundSystem {
+    usecase "Get All\nCampgrounds" as getAll
+    usecase "Get Single\nCampground" as getOne
+    usecase "Create New\nCampground" as create
+    usecase "Update Single\nCampground" as update
+    usecase "Delete Single\nCampground" as delete
+}
+
+user -- getAll
+user -- getOne
+
+actor "Admin" as admin
+getAll -- admin
+getOne -- admin
+create -- admin
+update -- admin
+delete -- admin
+
+@enduml
+

@@ -1,0 +1,92 @@
+
+@startuml 
+
+    class "<<Application>>\nCampgroundAPIServices" as CampgroundAPIServices{}
+
+package "Reservation"{
+
+    class "<<Resource>>\nRservations" as ResourceReservations{
+        <<GET>> +getReservations():Reservation
+        <<POST>> +createReservation():Reservation
+    }
+
+    class "<<Resource>>\nReservation" as ResourceReservation {
+        <<GET>> +getReservation(): Reservation
+        <<PUT>> +updateReservation(): Reservation
+        <<DELETE>> +deleteReservation(): void
+    }
+
+    class "<<Representation>>\nReservation" as RepresentationReservation {
+        -apptDate
+        -user 
+        -campground
+        -createdAt
+    }
+
+}
+
+CampgroundAPIServices ..> ResourceReservations:"/reservations\n<<Path>>"
+ResourceReservations ..> ResourceReservation: "/{reservationId}\n<<Path>>"
+ResourceReservation ..> RepresentationReservation: "<<use>>"
+
+package "Campground"{
+
+    class "<<Resource>>\nCampgrounds" as ResourceCampgrounds{
+        <<GET>> +getCampgrounds():Campground
+        <<POST>> +createCampground():Campground
+    }
+
+    class "<<Resource>>\nCampground" as ResourceCampground {
+        <<GET>> +getCampground(): Campground
+        <<PUT>> +updateCampground(): Campground
+        <<DELETE>> +deleteCampground(): void
+    }
+
+    class "<<Resource>>\nCampgroundIdReservation" as ResourceCampgroundReservation {
+        <<GET>> +getReservations(): Reservations
+    }
+
+    class "<<Representation>>\nCampground" as RepresentationCampground {
+        -name
+        -address
+        -district
+        -province
+        -region
+        -postalcode
+        -tel
+        -url
+        -maxReservations
+    }
+
+}
+
+CampgroundAPIServices ..> ResourceCampgrounds:"/campgrounds\n<<Path>>"
+ResourceCampgrounds ..> ResourceCampground: "/{campgroundId}\n<<Path>>"
+CampgroundAPIServices ..> ResourceCampgroundReservation: "/:campgroundId/reservations/\n<<Path>>"
+ResourceCampgroundReservation ..> RepresentationReservation: "<<use>>"
+ResourceCampground ..> RepresentationCampground: "<<use>>"
+
+package "User" {
+
+    class "<<Resource>>\nUser" as ResourceUser {
+        <<POST>> +register(): void
+        <<POST>> +login(): void
+        <<GET>> +getMe(): User
+        <<GET>> +logout(): void
+    }
+
+    class "Representation>>\nUser" as RepresentationUser {
+        -name
+        -tel
+        -email
+        -role
+        -createdAt
+    }
+
+    CampgroundAPIServices ..> ResourceUser: "/users\n<<Path>>"
+    ResourceUser ..> RepresentationUser: "<<use>>"
+
+}
+
+@enduml
+

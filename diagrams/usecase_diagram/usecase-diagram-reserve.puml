@@ -1,0 +1,35 @@
+@startuml
+left to right direction
+actor "User" as user
+rectangle "Reservations" as ReservationSystem {
+    usecase "Get All\nReservations" as getAll
+    usecase "Get One\nReservations" as getOne
+    usecase "Get Reservation\nfor Campground" as getRes
+    usecase "Get All\nCalenders" as getCals
+    usecase "Get One\nCalender" as getCal
+    usecase "Add One\nReservation" as add
+    usecase "Update One\nReservation" as update
+    usecase "Delete One\nReservation" as delete
+}
+
+user -- getAll
+user -- getOne
+user -- getRes
+user -- getCals
+user -- getCal
+user -- add
+user -- update
+user -- delete
+
+actor "Admin" as admin
+getAll -- admin
+getOne -- admin
+getRes -- admin
+getCals -- admin
+getCal -- admin
+add -- admin
+update -- admin
+delete -- admin
+
+@enduml
+
