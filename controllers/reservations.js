@@ -286,13 +286,14 @@ exports.getCalendars = async (req, res, next) => {
                     maxReservation: curr.campground.maxReservations,
                     tel: curr.campground.tel,
                     url: curr.campground.url,
+                    bookings: [],
                 };
             }
             acc[date][curr.campground._id].totalBookings++;
 
             // Include user information only if logged in as admin
             if (req.user && req.user.role === 'admin') {
-                acc[date][curr.campground._id].bookings = [];
+                //acc[date][curr.campground._id].bookings = [];
                 acc[date][curr.campground._id].bookings.push({
                     user: {
                         _id: curr.user._id,
